@@ -1,34 +1,47 @@
 import { useState } from 'react'
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Container, Navbar, Nav } from 'react-bootstrap' 
 import Welcome from './Welcome/Welcome.jsx'
 import Login from './Login/Login.jsx'
 import Balance from './Balance/Balance.jsx'
 import Movements from './Movements/Movements.jsx'  
 import Summary from './Summary/Summary.jsx'
+import accounts from './Accounts/Accounts.jsx'
+
 
 function App() {
 
+  const [account, setAccount] = useState(null)
+
   const handleLogin = (user, pin) => {
-    console.log("Login succesful! "+ user, pin)
+    const currentAccount = accounts.find(acc => acc.username === user && acc.pin === Number(pin)
+
+    )
+   if (currentAccount) setAccount(currentAccount)
+    console.log("current account", currentAccount), console.log("user", user), console.log("pin", pin)
   }
 
   return (
     <>
-      <nav>
-      <Welcome/>
+    <Container>
+      <Navbar bg='Light' expand="lg" className='flex flex-row justify-content-between'>
+      <Welcome account={account} />
       <img src="logo.png" alt="Logo" className="logo" />
      <Login onLogin={handleLogin} />
-    </nav>
-
-    <main className="app">
+     </Navbar>
+     </Container>
+    
+{account && (
+  <Container>
       {/* <!-- BALANCE --> */}
-      <Balance/>
+      <Balance movements={account.movements}/>
 
       {/* <!-- MOVEMENTS --> */}
-      <Movements/>
+      <Movements movements={account.movements} />
 
       {/* <!-- SUMMARY --> */}
-      <Summary/>
+      <Summary movements={account.movements} />
 
       {/* <!-- OPERATION: TRANSFERS --> */}
       <div className="operation operation--transfer">
@@ -72,7 +85,11 @@ function App() {
       <p className="logout-timer">
         You will be logged out in <span className="timer">05:00</span>
       </p>
-    </main>
+    </Container>
+)
+}
+
+    
     </>
   )
 }

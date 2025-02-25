@@ -1,9 +1,9 @@
-import './Welcome.css'
+import './Welcome.css';
 
-function Welcome() {
-    return (
-        <p className="welcome">Log in to get started</p>
-    )
+function Welcome({ account }) {
+  if (!account) return <p className="welcome">Log in to get started</p>;
+  const name = account.owner.split(' ')[0];
+  return <p className="welcome">Bienvenido, {name}</p>;
 }
-    
-export default Welcome
+
+export default Welcome;
