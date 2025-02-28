@@ -46,7 +46,7 @@ function App() {
       <Summary movements={account.movements} />
 
       {/* <!-- OPERATION: TRANSFERS --> */}
-      <Transfers/>
+      <Transfers currentAccount={account} movements={account.movements} accounts={accounts}/>
 
       {/* <!-- OPERATION: LOAN --> */}
       <Loan/>

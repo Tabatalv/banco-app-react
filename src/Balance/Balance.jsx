@@ -5,6 +5,7 @@ function Balance ({movements}){
   const balance = movements.reduce((total, movement)=> total + movement,
    0
   )
+
     return (
         <div className="balance">
         <div>
