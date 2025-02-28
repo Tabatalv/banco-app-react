@@ -1,6 +1,7 @@
 import "../App.css";
 import { useState, useRef } from "react";
 
+
 function Transfers({ currentAccount, movements, accounts }) {
   const [accTransfer, setAccTransfer] = useState(null);
   const transferRef = useRef();
@@ -24,7 +25,8 @@ function Transfers({ currentAccount, movements, accounts }) {
       if (originBalance >= amount && amount > 0) {
         accTransfer.movements.push(amount);
         currentAccount.movements.push(-amount);
-        
+        console.log(accTransfer.movements, currentAccount.movements)
+       
       }
     }
     

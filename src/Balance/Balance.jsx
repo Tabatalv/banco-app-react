@@ -2,7 +2,7 @@ import './Balance.css'
 
 function Balance ({movements}){
 
-  const balance = movements.reduce((total, movement)=> total + movement,
+  let balance = movements.reduce((total, movement)=> total + movement,
    0
   )
 

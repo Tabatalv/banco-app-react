@@ -49,7 +49,7 @@ function App() {
       <Transfers currentAccount={account} movements={account.movements} accounts={accounts}/>
 
       {/* <!-- OPERATION: LOAN --> */}
-      <Loan/>
+      <Loan movements={account.movements} />
 
       {/* <!-- OPERATION: CLOSE --> */}
       <Close/>
