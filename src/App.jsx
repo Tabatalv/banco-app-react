@@ -8,7 +8,9 @@ import Balance from './Balance/Balance.jsx'
 import Movements from './Movements/Movements.jsx'  
 import Summary from './Summary/Summary.jsx'
 import accounts from './Accounts/Accounts.jsx'
-
+import Transfers from './Transfers/Transfers.jsx'
+import Loan from './Loan/Loan.jsx'
+import Close from './Close/Close.jsx'
 
 function App() {
 
@@ -44,42 +46,13 @@ function App() {
       <Summary movements={account.movements} />
 
       {/* <!-- OPERATION: TRANSFERS --> */}
-      <div className="operation operation--transfer">
-        <h2>Transfer money</h2>
-        <form className="form form--transfer">
-          <input type="text" className="form__input form__input--to" />
-          <input type="number" className="form__input form__input--amount" />
-          <button className="form__btn form__btn--transfer">&rarr;</button>
-          <label className="form__label">Transfer to</label>
-          <label className="form__label">Amount</label>
-        </form>
-      </div>
+      <Transfers/>
 
       {/* <!-- OPERATION: LOAN --> */}
-      <div className="operation operation--loan">
-        <h2>Request loan</h2>
-        <form className="form form--loan">
-          <input type="number" className="form__input form__input--loan-amount" />
-          <button className="form__btn form__btn--loan">&rarr;</button>
-          <label className="form__label form__label--loan">Amount</label>
-        </form>
-      </div>
+      <Loan/>
 
       {/* <!-- OPERATION: CLOSE --> */}
-      <div className="operation operation--close">
-        <h2>Close account</h2>
-        <form className="form form--close">
-          <input type="text" className="form__input form__input--user" />
-          <input
-            type="password"
-            maxlength="6"
-            className="form__input form__input--pin"
-          />
-          <button className="form__btn form__btn--close">&rarr;</button>
-          <label className="form__label">Confirm user</label>
-          <label className="form__label">Confirm PIN</label>
-        </form>
-      </div>
+      <Close/>
 
       {/* <!-- LOGOUT TIMER --> */}
       <p className="logout-timer">
