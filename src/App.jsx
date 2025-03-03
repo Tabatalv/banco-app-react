@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container, Navbar, Nav } from 'react-bootstrap' 
@@ -23,6 +23,29 @@ function App() {
    if (currentAccount) setAccount(currentAccount)
     console.log("current account", currentAccount), console.log("user", user), console.log("pin", pin)
   }
+
+  //TIMER 
+  const [time, setTime] = useState(305);
+  
+
+  useEffect(() => {
+    if (time === 0) {
+      setAccount(null)
+    
+    }
+
+    const timer = setInterval(() => {
+      setTime((prevTime) => prevTime - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [time]);
+
+  const formatTime = (time) => {
+    const min = String(Math.trunc(time / 60)).padStart(2, "0");
+    const sec = String(time % 60).padStart(2, "0");
+    return `${min}:${sec}`;
+  };
 
   return (
     <>
@@ -56,7 +79,7 @@ function App() {
 
       {/* <!-- LOGOUT TIMER --> */}
       <p className="logout-timer">
-        You will be logged out in <span className="timer">05:00</span>
+        You will be logged out in <span className="timer">{formatTime(time)}</span>
       </p>
     </Container>
 )
