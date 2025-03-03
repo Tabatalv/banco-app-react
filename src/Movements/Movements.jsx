@@ -1,12 +1,20 @@
-import React from 'react';
 import './Movements.css';
+import moment from 'moment';
 
 const Movements = ({ movements: rawMovements }) => {
-  const movements = rawMovements.map(movement => ({
+ 
+
+  const movements = rawMovements.map(movement => {
+  const randomDays = Math.floor(Math.random() * 10) + 1
+  const date = moment().subtract(randomDays, 'days').fromNow();
+
+  return {
     value: movement,
     type: movement < 0 ? 'withdrawal' : 'deposit',
-    date: '24/01/2037'
-  }))
+    date: date
+  }
+    
+  })
 
  
 
@@ -26,3 +34,4 @@ const Movements = ({ movements: rawMovements }) => {
 };
 
 export default Movements;
+
