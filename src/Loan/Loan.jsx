@@ -10,8 +10,14 @@ function Loan({movements}){
     e.preventDefault()
     const amountLoan = Number(amountRef.current.value)
     const originBalance = movements.reduce((total, movement) => total + movement, 0)
-    const limitLoan = (limite/100) * originBalance
-    if(amountLoan > 0 && amountLoan <= limitLoan  ){}
+    const limitLoan = (limit/100) * originBalance
+    if(amountLoan > 0 && amountLoan <= limitLoan  ){
+      movements.push(amountLoan)
+      console.log(movements)
+    }
+    else{
+      console.log("No cumple requisitos")
+    }
 
   }
 

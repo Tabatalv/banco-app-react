@@ -30,7 +30,7 @@ function App() {
       <Navbar bg='Light' expand="lg" className='flex flex-row justify-content-between'>
       <Welcome account={account} />
       <img src="logo.png" alt="Logo" className="logo" />
-     <Login onLogin={handleLogin} />
+     <Login onLogin={handleLogin}/>
      </Navbar>
      </Container>
     
@@ -52,7 +52,7 @@ function App() {
       <Loan movements={account.movements} />
 
       {/* <!-- OPERATION: CLOSE --> */}
-      <Close/>
+      <Close accounts={accounts} currentAccount={account} setAccount={setAccount} />
 
       {/* <!-- LOGOUT TIMER --> */}
       <p className="logout-timer">
@@ -61,6 +61,7 @@ function App() {
     </Container>
 )
 }
+
 
     
     </>
