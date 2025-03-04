@@ -2,7 +2,7 @@ import "../App.css";
 import { useState, useRef } from "react";
 
 
-function Transfers({ currentAccount, movements, accounts }) {
+function Transfers({ currentAccount, movements, accounts, setAccount }) {
   const [accTransfer, setAccTransfer] = useState(null);
   const transferRef = useRef();
   const amountRef = useRef();
@@ -15,7 +15,7 @@ function Transfers({ currentAccount, movements, accounts }) {
     const acc = accounts.find((acc) => acc.username === transferTo);
 
     if (acc) {
-      setAccTransfer(acc);
+      
       const originBalance = movements.reduce(
         (total, movement) => total + movement,
         0
@@ -23,8 +23,10 @@ function Transfers({ currentAccount, movements, accounts }) {
       
      
       if (originBalance >= amount && amount > 0) {
-        accTransfer.movements.push(amount);
+        acc.movements.push(amount);
         currentAccount.movements.push(-amount);
+        setAccTransfer(acc);
+        setAccount(currentAccount)
         console.log(accTransfer.movements, currentAccount.movements)
        
       }
