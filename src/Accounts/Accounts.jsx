@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 const account1 = {
     owner: 'Juan Sánchez',
     movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -27,6 +29,28 @@ const account1 = {
   }
   
   const accounts = [account1, account2, account3, account4]
+   function createAccount() {
+
+    const randomNumber = Math.floor(Math.random() * 10) + 1;
+    const owner = faker.person.fullName()
+    const movements = Array.from({ length: randomNumber }, () => Number(faker.number.bigInt({ min: 100, max: 9000 })));
+    const interestRate = Number(faker.number.bigInt({min:0, max:2, precision: 0.1}))
+    const pin = Number(faker.number.bigInt({ min: 1000, max: 9999 }))
+    return {owner, movements, interestRate, pin}
+  
+  }
+  
+  
+  function createAccounts(n){
+    for (let i = 0; i < n; i++) {
+      accounts.push(createAccount())
+    }
+    return accounts
+  }
+  
+  //añado las cuentas creadas con faker dev a accounts
+  createAccounts(5)
+
   
   const createUsernames = function (accounts) {
     accounts.forEach(function (account) {
@@ -38,5 +62,12 @@ const account1 = {
     })
   }
   createUsernames(accounts)
-  
+
+
+  //FAKER DEV
+ 
+
+
+
+
   export default accounts

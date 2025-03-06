@@ -22,6 +22,7 @@ function App() {
     )
    if (currentAccount) setAccount(currentAccount)
     console.log("current account", currentAccount), console.log("user", user), console.log("pin", pin)
+  console.log(accounts)
   }
 
   //TIMER 
