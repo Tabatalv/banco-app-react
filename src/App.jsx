@@ -14,8 +14,12 @@ import Close from './Close/Close.jsx'
 
 function App() {
 
-  const [account, setAccount] = useState(null)
+  //Estado para almacenar la cuenta
 
+  const [account, setAccount] = useState(null)
+  const [sort, setSort] = useState(false)
+
+  //Obtenemos los datos del componente Login que nos los ha pasado y si el user y pin ingresados coinciden con los de alguna cuenta de accounts, si existe esa cuenta se guarda en account y se abre la cuenta
   const handleLogin = (user, pin) => {
     const currentAccount = accounts.find(acc => acc.username === user && acc.pin === Number(pin)
 
@@ -25,7 +29,7 @@ function App() {
   console.log(accounts)
   }
 
-  //TIMER 
+  //TIMER, para cerrar la sesión si el tiempo llega a 0
   const [time, setTime] = useState(305);
   
 
@@ -48,6 +52,7 @@ function App() {
     return `${min}:${sec}`;
   };
 
+  //Definimos todo en componentes y les pasamos a cada uno los props que necesitemos para que funcione
   return (
     <>
     <Container>
@@ -58,22 +63,23 @@ function App() {
      </Navbar>
      </Container>
     
+  {/* Si account existe, se abre la cuenta */}
 {account && (
   <Container>
       {/* <!-- BALANCE --> */}
       <Balance movements={account.movements}/>
 
       {/* <!-- MOVEMENTS --> */}
-      <Movements movements={account.movements} />
+      <Movements movements={account.movements} sort={sort} setAccount={setAccount} currentAccount={account}/>
 
       {/* <!-- SUMMARY --> */}
-      <Summary movements={account.movements} />
+      <Summary movements={account.movements} setSort={setSort}/>
 
       {/* <!-- OPERATION: TRANSFERS --> */}
       <Transfers currentAccount={account} movements={account.movements} accounts={accounts} setAccount={setAccount} />
 
       {/* <!-- OPERATION: LOAN --> */}
-      <Loan movements={account.movements} />
+      <Loan movements={account.movements} setAccount={setAccount} currentAccount={account} />
 
       {/* <!-- OPERATION: CLOSE --> */}
       <Close accounts={accounts} currentAccount={account} setAccount={setAccount} />
