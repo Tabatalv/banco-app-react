@@ -1,9 +1,8 @@
 import "../App.css";
 import { useState, useRef } from "react";
-
+import moment from "moment";
 //le pasamos nuestra cuenta actual, nuestros movimientos, todas las cuentas, y el setAccount que se utiliza para establecer la cuenta que ha iniciado sesion
 function Transfers({ currentAccount, movements, accounts, setAccount }) {
-  const [accTransfer, setAccTransfer] = useState(null);
 
   //utilizamos useRef para obtener los valores de los inputs
 
@@ -22,6 +21,19 @@ function Transfers({ currentAccount, movements, accounts, setAccount }) {
   
   //y volvemos a establecer mediante el setAccount nuestra cuenta como la que ha iniciado sesion, para que pueda actualizar nuestro balance
 
+  const addMovement = (account, amount) => {
+    const newMovement = {
+      date: moment().format('DD/MM/YYYY'), // Fecha de hoy
+      value: amount, // Cantidad pasada como parámetro
+    };
+  
+    account.movements.push(newMovement);
+    console.log(newMovement.date, "date transfer")
+  };
+  
+
+
+
   const transfer = function (e) {
     e.preventDefault();
     
@@ -33,17 +45,17 @@ function Transfers({ currentAccount, movements, accounts, setAccount }) {
     if (acc) {
       
       const originBalance = movements.reduce(
-        (total, movement) => total + movement,
+        (total, movement) => total + movement.value,
         0
       );
       
      
       if (originBalance >= amount && amount > 0) {
         acc.movements.push(amount);
-        currentAccount.movements.push(-amount);
-        setAccTransfer(acc);
+        addMovement(currentAccount, -amount)
+        addMovement(acc, amount)
         setAccount(currentAccount)
-        console.log(accTransfer.movements, currentAccount.movements)
+        console.log(acc.movements, currentAccount.movements)
        
       }
     }

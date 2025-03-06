@@ -2,14 +2,14 @@ import './Summary.css'
 
 
 //obtenemos los movimientos de nuestra cuenta
-function Summary({movements, setSort}){
+function Summary({movements, setSort, sortDireccion, setSortDireccion}){
  
 //obtenmos los movimientos positivos y con un reduce lo sumamos para obtener el total de los ingresos
-  const sumIn = movements.filter(movement => movement > 0).reduce((total, movement) => total + movement, 0)
+  const sumIn = movements.filter(movement => movement.value > 0).reduce((total, movement) => total + movement.value, 0)
   const totalIn = `${sumIn.toFixed(2)}€`
 
   // obtenmos los movimientos negativos y con un reduce lo sumamos para obtener el total de los egresos
-  const sumOut = movements.filter(movement => movement < 0).reduce((total, movement) => total + movement, 0)
+  const sumOut = movements.filter(movement => movement.value < 0).reduce((total, movement) => total + movement.value, 0)
   const totalOut = `${sumOut.toFixed(2)}€`
 
   //obtenemos el total de los movimientos positivos y lo multiplicamos por el 0.5 para obtener el interes
@@ -18,6 +18,7 @@ function Summary({movements, setSort}){
   function handleSort(e){
     e.preventDefault()
     setSort(true)
+    setSortDireccion(sortDireccion === "asc" ? "desc": "asc")
     console.log("sorted")
 
   }

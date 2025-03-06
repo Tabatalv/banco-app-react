@@ -1,12 +1,21 @@
 import "../App.css"
 import {useRef } from "react";
+import moment from "moment";
 
 //obtenemos los movimientos de nuestra cuenta
-function Loan({movements}){
+function Loan({movements, currentAccount}){
   //establecemos el useRef para poder obtener el valor del input y establecemos el limite a 200 ya que no puede ser superior al 200% del balance de la cuenta
   const amountRef = useRef()
   const limit = 200
 
+   const addMovement = (account, amount) => {
+      const newMovement = {
+        date: moment().format('DD/MM/YYYY'), // Fecha de hoy
+        value: amount, // Cantidad pasada como parámetro
+      };
+    
+      account.movements.push(newMovement);
+    };
 
   //definimos funcion para que se ejecute cuando le demos click a la flecha, primero obtenemos el valor del input y lo pasamos a Number para poder realizar operaciones aritmeticas
   //luego mediante un reduce de nuestros movimientos obtenemos el balance total y lo multiplicamos por el (200/100) para saber cuanto es el limite de credito que se puede solicitar
@@ -14,10 +23,10 @@ function Loan({movements}){
   const loan = function(e){
     e.preventDefault()
     const amountLoan = Number(amountRef.current.value)
-    const originBalance = movements.reduce((total, movement) => total + movement, 0)
+    const originBalance = movements.reduce((total, movement) => total + movement.value, 0)
     const limitLoan = (limit/100) * originBalance
     if(amountLoan > 0 && amountLoan <= limitLoan  ){
-      movements.push(amountLoan)
+      addMovement(currentAccount, amountLoan)
       console.log(movements)
     }
     else{

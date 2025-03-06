@@ -18,6 +18,7 @@ function App() {
 
   const [account, setAccount] = useState(null)
   const [sort, setSort] = useState(false)
+  const [sortDireccion, setSortDireccion] = useState("desc")
 
   //Obtenemos los datos del componente Login que nos los ha pasado y si el user y pin ingresados coinciden con los de alguna cuenta de accounts, si existe esa cuenta se guarda en account y se abre la cuenta
   const handleLogin = (user, pin) => {
@@ -70,10 +71,10 @@ function App() {
       <Balance movements={account.movements}/>
 
       {/* <!-- MOVEMENTS --> */}
-      <Movements movements={account.movements} sort={sort} setAccount={setAccount} currentAccount={account}/>
+      <Movements movements={account.movements} sort={sort} setAccount={setAccount} currentAccount={account} sortDireccion={sortDireccion}/>
 
       {/* <!-- SUMMARY --> */}
-      <Summary movements={account.movements} setSort={setSort}/>
+      <Summary movements={account.movements} setSort={setSort} sortDireccion={sortDireccion} setSortDireccion={setSortDireccion}/>
 
       {/* <!-- OPERATION: TRANSFERS --> */}
       <Transfers currentAccount={account} movements={account.movements} accounts={accounts} setAccount={setAccount} />
