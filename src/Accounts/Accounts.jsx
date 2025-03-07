@@ -7,7 +7,7 @@ const generateRandomMovements = (count) => {
       const randomDays = Math.floor(Math.random() * 5000) + 1; // Rango de días para fechas aleatorias
       const date = moment().subtract(randomDays, "days").format('DD/MM/YYYY');
       let value = Number(faker.number.bigInt({ min: 100, max: 9000 })) // Valores entre 100 y 9000
-      if(Math.random() < 0.3){
+      if(Math.random() < 0.){
         value = value * -1
       }
 

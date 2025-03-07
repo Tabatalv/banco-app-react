@@ -1,8 +1,9 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Cuenta para probar el banco: user: js, pin: 1111
 
-Currently, two official plugins are available:
+Las cuentas creadas aleatoriamente se pueden observar al hacer login, hay un console.log que las muestra
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Banco en funcionamiento: https://Tabatalv.github.io/banco-app-react
+
+Repositorio: https://github.com/Tabatalv/banco-app-react
