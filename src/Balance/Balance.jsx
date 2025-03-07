@@ -14,7 +14,7 @@ function Balance ({movements}){
             As of <span className="date">05/03/2037</span>
           </p>
         </div>
-        <p className="balance__value">{balance}€</p>
+        <p className="balance__value">{balance.toFixed(2)}€</p>
       </div>
     )
 }

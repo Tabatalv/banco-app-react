@@ -1,65 +1,56 @@
 import "../App.css";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import moment from "moment";
+
 //le pasamos nuestra cuenta actual, nuestros movimientos, todas las cuentas, y el setAccount que se utiliza para establecer la cuenta que ha iniciado sesion
 function Transfers({ currentAccount, movements, accounts, setAccount }) {
-
   //utilizamos useRef para obtener los valores de los inputs
 
   const transferRef = useRef();
   const amountRef = useRef();
 
-  //defjnimos funcion que se ejecutara cuando se haga click a la flecha, primero obtenemos la cuenta a la que hacemos la transferencia y la cantidad a transferir
-  
-  //luego verificamos si existe la cuenta, y si existe la guardamos en acc, luego obtenemos nuestro balance, que seria un reduce que nos entrega el total de los movimientos, y mientras
-  
-  //el balance sea mayor o igual a la cantidad a ingresar y si la cantidad ingresada es mayor a 0, se hace la transferencia,  para realizarla
-  
-  // hacemos un push de la cantidad a los movimientos a acc y un push de la cantidad pero negativa a nuestros movimientos
-  
-  //de esa forma se actualizará el balance restandole la cantidad que hemos transferido, finalizando estableciendo la cuenta a la que hemos hecho la transferencia como accTransfer
-  
-  //y volvemos a establecer mediante el setAccount nuestra cuenta como la que ha iniciado sesion, para que pueda actualizar nuestro balance
-
+  //creamos la funcion para hacer el push de la cantidad a los movimientos de la cuenta que indiquemos y la cantidad, con el formato tipo objeto que necesitamos
   const addMovement = (account, amount) => {
     const newMovement = {
-      date: moment().format('DD/MM/YYYY'), // Fecha de hoy
+      date: moment().format("DD/MM/YYYY"), // Fecha de hoy
       value: amount, // Cantidad pasada como parámetro
     };
-  
+
     account.movements.push(newMovement);
-    console.log(newMovement.date, "date transfer")
   };
-  
 
-
+  //defjnimos funcion que se ejecutara cuando se haga click a la flecha para hacer la transferencia
 
   const transfer = function (e) {
     e.preventDefault();
-    
+
+    // obtenemos la cuenta a la que hacemos la transferencia y la cantidad a transferir con useRef()
+
     const transferTo = transferRef.current.value;
     const amount = Number(amountRef.current.value);
 
+    //luego verificamos si existe la cuenta, y si existe la guardamos en acc
     const acc = accounts.find((acc) => acc.username === transferTo);
 
+    //si la cuenta existe, obtenemos nuestro balance, que seria un reduce que nos entrega el total de los movimientos
+
     if (acc) {
-      
       const originBalance = movements.reduce(
         (total, movement) => total + movement.value,
         0
       );
-      
-     
+
+      //si el balance sea mayor o igual a la cantidad a ingresar y si la cantidad ingresada es mayor a 0, se hace la transferencia, por lo que llamamos a la funcion addMovement
+      //para hacer el push de la cantidad a los movimientos a acc y un push de la cantidad pero negativa a nuestros movimientos
+      //y volvemos a establecer mediante el setAccount nuestra cuenta como la que ha iniciado sesion para que pueda actualizar nuestro balance
+
       if (originBalance >= amount && amount > 0) {
-        acc.movements.push(amount);
-        addMovement(currentAccount, -amount)
-        addMovement(acc, amount)
-        setAccount(currentAccount)
-        console.log(acc.movements, currentAccount.movements)
-       
+        addMovement(currentAccount, -amount);
+        addMovement(acc, amount);
+        setAccount(currentAccount);
+        console.log("Acc",acc.movements, "currentAcc",currentAccount.movements);
       }
     }
-    
   };
 
   return (

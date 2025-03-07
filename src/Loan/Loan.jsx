@@ -8,6 +8,7 @@ function Loan({movements, currentAccount}){
   const amountRef = useRef()
   const limit = 200
 
+  //creamos la funcion para hacer el push de la cantidad a los movimientos de la cuenta que indiquemos y la cantidad, con el formato tipo objeto que necesitamos
    const addMovement = (account, amount) => {
       const newMovement = {
         date: moment().format('DD/MM/YYYY'), // Fecha de hoy
@@ -19,7 +20,7 @@ function Loan({movements, currentAccount}){
 
   //definimos funcion para que se ejecute cuando le demos click a la flecha, primero obtenemos el valor del input y lo pasamos a Number para poder realizar operaciones aritmeticas
   //luego mediante un reduce de nuestros movimientos obtenemos el balance total y lo multiplicamos por el (200/100) para saber cuanto es el limite de credito que se puede solicitar
-  //y mientras la cantidad ingresada sea mayor a 0 y menor o igual al limite de credito, se hace el push de la cantidad a los movimientos
+  //y mientras la cantidad ingresada sea mayor a 0 y menor o igual al limite de credito, llamamos a la funcion addMovement para hacer el push de la cantidad a los movimientos de la cuenta
   const loan = function(e){
     e.preventDefault()
     const amountLoan = Number(amountRef.current.value)
@@ -27,7 +28,7 @@ function Loan({movements, currentAccount}){
     const limitLoan = (limit/100) * originBalance
     if(amountLoan > 0 && amountLoan <= limitLoan  ){
       addMovement(currentAccount, amountLoan)
-      console.log(movements)
+    
     }
     else{
       console.log("No cumple requisitos")

@@ -2,7 +2,7 @@ import './Summary.css'
 
 
 //obtenemos los movimientos de nuestra cuenta
-function Summary({movements, setSort, sortDireccion, setSortDireccion}){
+function Summary({movements, setSort}){
  
 //obtenmos los movimientos positivos y con un reduce lo sumamos para obtener el total de los ingresos
   const sumIn = movements.filter(movement => movement.value > 0).reduce((total, movement) => total + movement.value, 0)
@@ -15,11 +15,11 @@ function Summary({movements, setSort, sortDireccion, setSortDireccion}){
   //obtenemos el total de los movimientos positivos y lo multiplicamos por el 0.5 para obtener el interes
   const interest = sumIn * 0.5+"€"
 
+  //funcion que se activa cuando se presione el boton que dice sort, luego establecemos el estado de sort a true y establecemos el estado de sortDireccion en asc o desc
   function handleSort(e){
     e.preventDefault()
     setSort(true)
-    setSortDireccion(sortDireccion === "asc" ? "desc": "asc")
-    console.log("sorted")
+
 
   }
     return (

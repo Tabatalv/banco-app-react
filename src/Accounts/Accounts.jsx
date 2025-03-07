@@ -1,17 +1,24 @@
 import { faker } from '@faker-js/faker';
 import moment from 'moment';
 
-
+//creamos funcion para generar movimientos aleatorios que traigan fecha y valor del movimiento utilizando faker.js y moment.js para fechas
 const generateRandomMovements = (count) => {
     return Array.from({ length: count }, () => {
       const randomDays = Math.floor(Math.random() * 5000) + 1; // Rango de días para fechas aleatorias
       const date = moment().subtract(randomDays, "days").format('DD/MM/YYYY');
-      const value = Number(faker.number.bigInt({ min: 100, max: 9000 })) // Valores entre 100 y 9000
+      let value = Number(faker.number.bigInt({ min: 100, max: 9000 })) // Valores entre 100 y 9000
+      if(Math.random() < 0.5){
+        value = value * -1
+      }
+
+
+      //retornamos como objeto el valor y la fecha
       return { date, value };
+      
     });
   };
   
-
+//cuentas preestablecidas, y generamos movimientos aleatorios con la funcion generateRandomMovements
 const account1 = {
     owner: 'Juan Sánchez',
     movements: generateRandomMovements(7),
@@ -59,12 +66,11 @@ const account1 = {
     const movements = generateRandomMovements(randomNumber)
     const interestRate = Number(faker.number.bigInt({min:0, max:2, precision: 0.1}))
     const pin = Number(faker.number.bigInt({ min: 1000, max: 9999 }))
-    const dates = Array.from({ length: randomNumber }, () => moment(faker.date.past(1)).fromNow());
-    return {owner, movements, interestRate, pin, dates}
+    return {owner, movements, interestRate, pin}
   
   }
   
-  //Creamos n cuentas según le especifiquemos y las añadimos a nuestro array con las 4 cuentas ya establecidas para poder probar el banco
+  //Creamos n cuentas según le especifiquemos y las añadimos a nuestro array con las 5 cuentas ya establecidas para poder probar el banco
   function createAccounts(n){
     for (let i = 0; i < n; i++) {
       accounts.push(createAccount())
@@ -73,7 +79,7 @@ const account1 = {
   }
  
   
-  //creamos 5 cuentas o el numero que le indiquemos
+  //creamos 5 cuentas con el numero que le indiquemos
   createAccounts(5)
 
   
@@ -87,6 +93,7 @@ const account1 = {
         .join('') // js (lo contrario que split)
     })
   }
+  //los creamos a cada cuenta que exista
   createUsernames(accounts)
 
   

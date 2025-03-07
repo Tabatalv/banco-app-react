@@ -1,50 +1,43 @@
 import moment from "moment";
 import "./Movements.css";
 
-const Movements = ({ movements: rawMovements, sort, setAccount, currentAccount, sortDireccion }) => {
-  const movements = rawMovements.map((movement) => {
-    // const randomDays = Math.floor(Math.random() * 10) + 1;
-    // const date = moment().subtract(randomDays, "days");
-    
-    return {
-      value: movement.value,
-      type: movement < 0 ? "withdrawal" : "deposit",
-      date: movement.date,
-      // dateFormatted: date.fromNow(),
-    }; 
-    
-  })
-  let newMovements = movements
+//obetenemos los movimientos que los llamaremos como rawMovements, sort para saber si los movimientos estan ordenados y sortDireccion para saber si los movimientos estan ordenados de mayor a menor o viceversa
+const Movements = ({
+  movements: rawMovements,
+  sort,
+  setAccount,
+  currentAccount,
+}) => {
+  //funcion para devolver un objeto con los movimientos y agregarle el tipo de movimiento
+  const movements = rawMovements.map((movement) => ({
+    ...movement,
+    type: movement.value < 0 ? "withdrawal" : "deposit",
+  }));
 
-  const sortedMovements = [...movements].sort((a, b) => {
-    const dateA = moment(a.date, 'DD/MM/YYYY');
-    const dateB = moment(b.date, 'DD/MM/YYYY');
+//obtenemos los movimientos ordenados de mayor a menor
+  const sortedMovements2 = [...movements]
+    .map((movement) => ({
+      ...movement,
+      date : moment(movement.date, "DD/MM/YYYY")
+  }))
+    .sort((a, b) =>
+      sort ? (a.date).diff(b.date) : (b.date).diff(a.date)
+    );
 
-    if(sortDireccion === "asc"){
-       return dateA.diff(dateB) // Ordenar de más reciente a más antiguo
-    }
-    else{
-      
-      return dateB.diff(dateA);
-    }
-   
-  });
-  
 
+  //si sort es true (se ha presionado el boton para ordenar los movimientos) se establece el setAccount con la cuenta actual 
   if (sort) {
-    setAccount(currentAccount)
-    newMovements = sortedMovements
+    setAccount(currentAccount);
   }
   return (
-
-    
+    //mostramos los movimientos
     <div className="movements">
-      {newMovements.map((movement, index) => (
+      {sortedMovements2.map((movement, index) => (
         <div key={index} className="movements__row">
-          <div className={`movements__type movements__type--${movement.type}`}>
+           <div className={`movements__type movements__type--${movement.type}`}>
             {movement.type === "deposit" ? "Deposit" : "Withdrawal"}
           </div>
-          <div className="movements__date">{movement.date}</div>
+          <div className="movements__date">{movement.date.fromNow()}</div> 
           <div className="movements__value">{movement.value}</div>
         </div>
       ))}
